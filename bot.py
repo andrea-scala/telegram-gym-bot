@@ -9,15 +9,24 @@ from telegram import BotCommand
 import os
 
 app = ApplicationBuilder().token(os.getenv("BOT_TOKEN")).build()
-app.bot.set_my_commands([
-    BotCommand("start", "Avvia il bot"),
-    BotCommand("caricascheda", "Carica la tua scheda di allenamento"),
-    BotCommand("allenati", "Inizia un allenamento guidato"),
-    BotCommand("storico", "Visualizza lo storico dei tuoi allenamenti")
-])
+async def post_startup(application):
+    await application.bot.set_my_commands([
+        BotCommand("start", "Avvia il bot"),
+        BotCommand("caricascheda", "Carica la scheda"),
+        BotCommand("allenati", "Inizia un allenamento"),
+        BotCommand("storico", "Confronta allenamenti"),
+    ])
+
+app.post_init = post_startup
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("Ciao! Sono il tuo bot palestra 💪. Usa /")
+    await update.message.reply_text(
+        "Ciao! Sono il tuo bot palestra 💪\n\n"
+        "Ecco i comandi che puoi usare:\n"
+        "📋 /caricascheda – Carica la tua scheda di allenamento (anche via foto)\n"
+        "🏋️ /allenati – Inizia l’allenamento guidato\n"
+        "📈 /storico – Confronta le tue performance passate\n"
+    )
 
 # Aggiunta al dispatcher
 app.add_handler(CommandHandler("start", start))
