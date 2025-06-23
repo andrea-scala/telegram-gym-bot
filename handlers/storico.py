@@ -21,15 +21,11 @@ async def mostra_storico(update, context):
         data, serie_index, ripetizioni, carico = r
         storico_by_data.setdefault(data, []).append((serie_index, ripetizioni, carico))
 
-    msg = f"📈 Storico per *{esercizio.title()}*:
-"
+    msg = f"📈 Storico per *{esercizio.title()}*:"
     for data in sorted(storico_by_data.keys()):
-        msg += f"
-📅 {data}:
-"
+        msg += f"📅 {data}:"
         for serie in sorted(storico_by_data[data]):
-            msg += f"  - Serie {serie[0]}: {serie[1]} rip. x {serie[2]} kg
-"
+            msg += f"  - Serie {serie[0]}: {serie[1]} rip. x {serie[2]} kg"
     await update.message.reply_text(msg, parse_mode="Markdown")
 
     return ConversationHandler.END
