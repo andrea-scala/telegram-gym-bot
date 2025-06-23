@@ -51,7 +51,7 @@ async def manda_prossimo_esercizio(update, context):
 
     serie = esercizio["serie_ripetizioni"] or "serie non definite"
     note = esercizio["note"] or "nessuna nota"
-    await update.message.reply_text(f"🏋️ Esercizio {idx+1}: *{esercizio['titolo']}*
+    await update.message.reply_text(f"🏋️ Esercizio {idx+1}: *{esercizio['titolo']}*")
 Serie: {serie}
 Note: {note}", parse_mode='Markdown')
     await update.message.reply_text("👉 Serie 1: Quante ripetizioni? (o scrivi 'salta')")
